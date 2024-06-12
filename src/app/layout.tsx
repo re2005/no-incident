@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
     <body className={inter.className}>
         <div style={{padding: "20px"}}>
-            <h1 className="text-5xl tracking-tighter text-center">Days without incidents</h1>
+            <h1 className="text-3xl tracking-tighter text-center font-bold">Days without incidents</h1>
             {children}
         </div>
     </body>

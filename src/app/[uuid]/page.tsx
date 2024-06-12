@@ -1,25 +1,33 @@
-"use client"
-
-import {useEffect, useState} from "react";
 import {validate} from 'uuid';
-import Counter from "./Counter";
+import CounterServer from "./CounterServer";
+import ResetServer from "@/app/[uuid]/ResetServer";
 
 export default function CounterPage({params}: { params: { uuid: string } }) {
-    const [isValid, setIsValid] = useState(false);
+    const currentUuid = params.uuid || '';
 
-    useEffect(() => {
-        const currentUuid = params.uuid || localStorage.getItem('UUID');
-        if (!validate(currentUuid as string)) {
-            console.error('Invalid UUID:', currentUuid);
+    let isValid = false;
+    if (typeof window === 'undefined') {
+        // This code runs only on the server
+        if (currentUuid) {
+            isValid = validate(currentUuid);
+            if (!isValid) {
+                console.error('Invalid UUID:', currentUuid);
+            }
         }
-        setIsValid(validate(currentUuid as string));
-    }, [params.uuid]);
-
-    const currentUuid = params.uuid || localStorage.getItem('UUID');
+    }
 
     return (
         <div className="flex justify-center p-10">
-            {isValid ? <Counter uuid={currentUuid as string}/> : <div>Invalid UUID</div>}
+            {
+                isValid
+                    ?
+                    <div className='flex flex-col gap-10'>
+                        <CounterServer uuid={currentUuid as string}/>
+                        <ResetServer uuid={currentUuid as string}/>
+                    </div>
+                    :
+                    <div>Invalid UUID</div>
+            }
         </div>
     );
 }

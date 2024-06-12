@@ -12,7 +12,7 @@ export default function HomePage() {
             let currentUuid = localStorage.getItem('UUID');
             if (!currentUuid) {
                 const newUuid = uuidv4();
-                localStorage.setItem('UUID', newUuid);
+                // localStorage.setItem('UUID', newUuid);
                 currentUuid = newUuid;
             }
             router.push(`/${currentUuid}`);
