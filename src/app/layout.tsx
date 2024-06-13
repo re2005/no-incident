@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
+import {Providers} from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <body className={inter.className}>
+    <body className={inter.className + ' dark'}>
+    <Providers>
         <div style={{padding: "20px"}}>
-            <h1 className="text-3xl tracking-tighter text-center font-bold">Days without incidents</h1>
+            <h1 className="text-xl tracking-tighter text-center font-bold">Days without incidents</h1>
             {children}
         </div>
+    </Providers>
     </body>
     </html>
   );

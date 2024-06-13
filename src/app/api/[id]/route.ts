@@ -46,3 +46,14 @@ export async function POST(req: Request, {params}: any) {
     }
 }
 
+export async function PUT(req: Request, {params}: any) {
+    const {date} = await req.json();
+    const existingUuid = await sql`select * from incidents where uuid = ${params.id}`;
+
+    if (existingUuid.rows.length > 0) {
+        return await updateToOlderDate(params.id, date);
+    } else {
+        return Response.error();
+    }
+}
+

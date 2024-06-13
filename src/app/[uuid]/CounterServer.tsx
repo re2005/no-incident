@@ -51,7 +51,7 @@ export default async function CounterServer({uuid}: { uuid: string }) {
 
     return (
         <div className='flex flex-col items-center'>
-            <h2 className="text-7xl text-pink-600 font-black">{lastUpdate} DAY {lastUpdate > 1 && 'S'}</h2>
+            <h2 className="text-7xl text-violet-600 font-black">{lastUpdate} DAY{lastUpdate > 1 && 'S'}</h2>
         </div>
     );
 }
