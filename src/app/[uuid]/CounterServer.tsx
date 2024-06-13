@@ -36,7 +36,7 @@ export default async function CounterServer({uuid}: { uuid: string }) {
         const data = await fetchCounterData(uuid);
         if (!data) {
             const newData = await createRecord(uuid);
-            lastUpdate = newData.last_updated;
+            lastUpdate = calculateTimeDifference(newData.last_updated);
         } else {
             lastUpdate = calculateTimeDifference(data.last_updated);
         }
