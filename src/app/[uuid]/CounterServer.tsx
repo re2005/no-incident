@@ -30,7 +30,7 @@ async function createRecord(uuid: string) {
 }
 
 export default async function CounterServer({uuid}: { uuid: string }) {
-    let lastUpdate = '';
+    let lastUpdate = 0;
 
     try {
         const data = await fetchCounterData(uuid);
@@ -38,7 +38,7 @@ export default async function CounterServer({uuid}: { uuid: string }) {
             const newData = await createRecord(uuid);
             lastUpdate = newData.last_updated;
         } else {
-            lastUpdate = data.last_updated;
+            lastUpdate = calculateTimeDifference(data.last_updated);
         }
     } catch (error) {
         console.error('Error handling counter data:', error);
@@ -51,7 +51,7 @@ export default async function CounterServer({uuid}: { uuid: string }) {
 
     return (
         <div className='flex flex-col items-center'>
-            <h2 className="text-7xl text-pink-600 font-black">{calculateTimeDifference(lastUpdate)} DAYS</h2>
+            <h2 className="text-7xl text-pink-600 font-black">{lastUpdate} DAY {lastUpdate > 1 && 'S'}</h2>
         </div>
     );
 }
