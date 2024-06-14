@@ -9,6 +9,10 @@ export default function DatepickerServer({uuid}: { uuid: string }) {
     const userLocale = 'en-GB';
     const [selectedDate, setSelectedDate] = useState<DateValue>();
 
+    if (typeof window !== 'undefined' && uuid !== undefined) {
+        localStorage.setItem('UUID', uuid);
+    }
+
     function convertDateString(dateString: DateValue) {
         const date = dateString.toString();
         const jsDate = new Date(date);
