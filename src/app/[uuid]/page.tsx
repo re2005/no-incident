@@ -1,10 +1,10 @@
 import {validate} from 'uuid';
 import CounterServer from "./CounterServer";
 import ResetServer from "@/app/[uuid]/ResetServer";
-import DatepickerServer from "@/app/[uuid]/DatepickerServer";
+import Datepicker from "@/app/[uuid]/Datepicker";
 import QrCode from "@/app/[uuid]/QrCode";
 
-export default function CounterPage({params}: { params: { uuid: string } }) {
+export default function CounterPage({params}: { params: { uuid: string }}) {
     const currentUuid = params.uuid || '';
 
     let isValid = false;
@@ -26,7 +26,7 @@ export default function CounterPage({params}: { params: { uuid: string } }) {
                     <div className='flex flex-col gap-10'>
                         <CounterServer uuid={currentUuid}/>
                         <div className='flex flex-col gap-5 items-center'>
-                            <DatepickerServer uuid={currentUuid}/>
+                            <Datepicker uuid={currentUuid}/>
                             <ResetServer uuid={currentUuid}/>
                             <QrCode uuid={currentUuid} />
                         </div>

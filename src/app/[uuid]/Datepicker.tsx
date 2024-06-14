@@ -6,7 +6,7 @@ import {getLocalTimeZone, today} from "@internationalized/date";
 import {I18nProvider} from "@react-aria/i18n";
 
 export default function DatepickerServer({uuid}: { uuid: string }) {
-    const userLocale = typeof window !== 'undefined' && window.navigator ? window.navigator.language : 'en-GB';
+    const userLocale = 'en-GB';
     const [selectedDate, setSelectedDate] = useState<DateValue>();
 
     function convertDateString(dateString: DateValue) {
@@ -30,7 +30,6 @@ export default function DatepickerServer({uuid}: { uuid: string }) {
             console.error('Error setting new date:', error);
         } finally {
             location.reload();
-
         }
     }
 

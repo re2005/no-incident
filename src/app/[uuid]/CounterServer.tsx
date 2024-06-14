@@ -9,7 +9,7 @@ function calculateTimeDifference(givenTimestamp: string): number {
     return Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
 }
 
-async function fetchCounterData(uuid: string) {
+async function fetchData(uuid: string) {
     const result = await sql`SELECT last_updated FROM incidents WHERE uuid = ${uuid}`;
     if (result.rowCount === 0) {
         return null;
@@ -18,6 +18,7 @@ async function fetchCounterData(uuid: string) {
 }
 
 async function createRecord(uuid: string) {
+
     const result = await sql`
         INSERT INTO incidents (uuid, last_updated)
         VALUES (${uuid}, NOW())
@@ -33,7 +34,7 @@ export default async function CounterServer({uuid}: { uuid: string }) {
     let lastUpdate = 0;
 
     try {
-        const data = await fetchCounterData(uuid);
+        const data = await fetchData(uuid);
         if (!data) {
             const newData = await createRecord(uuid);
             lastUpdate = calculateTimeDifference(newData.last_updated);
