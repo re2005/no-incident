@@ -2,6 +2,8 @@ import {sql} from '@vercel/postgres';
 
 function calculateTimeDifference(givenTimestamp: string): number {
     const now: Date = new Date();
+    console.log('now', now);
+    console.log('givenTimestamp', givenTimestamp);
     const givenDate: Date = new Date(givenTimestamp);
     now.setHours(0, 0, 0, 0);
     givenDate.setHours(0, 0, 0, 0);
@@ -45,7 +47,7 @@ export default async function CounterServer({uuid}: { uuid: string }) {
         console.error('Error handling counter data:', error);
         return (
             <div className='flex flex-col items-center gap-10 mt-10'>
-                <h2 className="text-5xl text-pink-600">Error</h2>
+                <h2 className="text-5xl">Something went wrong</h2>
             </div>
         );
     }
