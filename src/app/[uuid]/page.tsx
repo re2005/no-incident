@@ -32,7 +32,7 @@ export default function CounterPage({params}: { params: { uuid: string }}) {
                         </div>
                     </div>
                     :
-                    <div>Invalid UUID</div>
+                    <div>Something went wrong try <a href={'/'}>clicking here</a></div>
             }
         </div>
     );
