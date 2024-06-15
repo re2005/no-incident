@@ -2,8 +2,6 @@ import {sql} from '@vercel/postgres';
 
 function calculateTimeDifference(givenTimestamp: string): number {
     const now: Date = new Date();
-    console.log('now', now);
-    console.log('givenTimestamp', givenTimestamp);
     const givenDate: Date = new Date(givenTimestamp);
     now.setHours(0, 0, 0, 0);
     givenDate.setHours(0, 0, 0, 0);
@@ -12,15 +10,11 @@ function calculateTimeDifference(givenTimestamp: string): number {
 }
 
 async function fetchData(uuid: string) {
-    const result = await sql`SELECT last_updated FROM incidents WHERE uuid = ${uuid}`;
-    if (result.rowCount === 0) {
-        return null;
-    }
-    return result.rows[0];
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${uuid}?timestamp=${Date.now()}`).then((response) => response.json());
+    return data?.last_updated;
 }
 
 async function createRecord(uuid: string) {
-
     const result = await sql`
         INSERT INTO incidents (uuid, last_updated)
         VALUES (${uuid}, NOW())
@@ -36,14 +30,14 @@ export default async function CounterServer({uuid}: { uuid: string }) {
     let lastUpdate = 0;
 
     try {
-        const data = await fetchData(uuid);
-        if (!data) {
+        const resp = await fetchData(uuid);
+        console.log('Data:', resp);
+        if (!resp) {
             const newData = await createRecord(uuid);
-            console.log('data', newData);
+            console.log('newData:', newData);
             lastUpdate = calculateTimeDifference(newData.last_updated);
         } else {
-            console.log('data', data);
-            lastUpdate = calculateTimeDifference(data.last_updated);
+            lastUpdate = calculateTimeDifference(resp);
         }
     } catch (error) {
         console.error('Error handling counter data:', error);
