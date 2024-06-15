@@ -10,7 +10,7 @@ function calculateTimeDifference(givenTimestamp: string): number {
 }
 
 async function fetchData(uuid: string) {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${uuid}?timestamp=${Date.now()}`).then((response) => response.json());
+    const data = await fetch(`${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.NEXT_PUBLIC_API_URL}/${uuid}?timestamp=${Date.now()}`).then((response) => response.json());
     return data?.last_updated;
 }
 
