@@ -10,7 +10,8 @@ function calculateTimeDifference(givenTimestamp: string): number {
 }
 
 async function fetchData(uuid: string) {
-    const url = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/api/${uuid}?timestamp=${Date.now()}`;
+    const host = process.env.NODE_ENV === 'development' ? process.env.VERCEL_PROJECT_PRODUCTION_URL : `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    const url = `${host}/api/${uuid}?timestamp=${Date.now()}`;
     const data = await fetch(url).then((response) => response.json());
     return data?.last_updated;
 }
